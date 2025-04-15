@@ -69,12 +69,12 @@ export default function CartDropdown() {
           <Popover.Button
             className={`
                 ${open ? "" : "text-opacity-90"}
-                 group w-10 h-10 sm:w-12 sm:h-12 rounded-full inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 relative`}>
-            <div>
-              <div className="w-3.5 h-3.5 flex items-center justify-center bg-primary-500 absolute sm:top-1.5 right-1 sm:right-3 rounded-full text-[10px] leading-none text-white font-medium">
+                 group flex-col w-10 h-10 sm:w-12 sm:h-12 rounded-full inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 relative`}>
+            <div className="relative">
+              <div className="w-3.5 h-3.5 flex items-center justify-center bg-yellow-500 absolute -top-1 -right-1 rounded-full text-[10px] leading-none text-white font-medium">
                 <span className="mt-[1px]">3</span>
               </div>
-              <div className="relative flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -90,8 +90,7 @@ export default function CartDropdown() {
                 </svg>
               </div>
             </div>
-            <br />
-            <p className="text-xs font-medium">Cart</p>
+            <span className="text-xs font-medium mt-1">Cart</span>
 
             <Link className="block md:hidden absolute inset-0" href={"/cart"} />
           </Popover.Button>
