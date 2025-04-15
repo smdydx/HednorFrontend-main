@@ -32,6 +32,7 @@ import ReviewItem from "@/components/ReviewItem";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import SectionPromo2 from "@/components/SectionPromo2";
 import ModalViewAllReviews from "./ModalViewAllReviews";
+import ModalSubmitReview from "@/components/ModalSubmitReview";
 import NotifyAddTocart from "@/components/NotifyAddTocart";
 import Image from "next/image";
 import AccordionInfo from "@/components/AccordionInfo";
@@ -59,8 +60,8 @@ const ProductDetailPage = () => {
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
   const [qualitySelected, setQualitySelected] = useState(1);
-  const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
-    useState(false);
+  const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] = useState(false);
+  const [isOpenModalSubmitReview, setIsOpenModalSubmitReview] = useState(false);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -410,11 +411,16 @@ const ProductDetailPage = () => {
             />
           </div>
 
-          <ButtonSecondary
-            onClick={() => setIsOpenModalViewAllReviews(true)}
-            className="mt-10 border border-slate-300 dark:border-slate-700 ">
-            Show me all 142 reviews
-          </ButtonSecondary>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <ButtonSecondary
+              onClick={() => setIsOpenModalViewAllReviews(true)}
+              className="border border-slate-300 dark:border-slate-700">
+              Show me all 142 reviews
+            </ButtonSecondary>
+            <ButtonPrimary onClick={() => setIsOpenModalSubmitReview(true)}>
+              Write a Review
+            </ButtonPrimary>
+          </div>
         </div>
       </div>
     );
@@ -611,6 +617,10 @@ const ProductDetailPage = () => {
       <ModalViewAllReviews
         show={isOpenModalViewAllReviews}
         onCloseModalViewAllReviews={() => setIsOpenModalViewAllReviews(false)}
+      />
+      <ModalSubmitReview
+        show={isOpenModalSubmitReview}
+        onCloseModal={() => setIsOpenModalSubmitReview(false)}
       />
     </div>
   );
