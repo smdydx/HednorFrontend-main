@@ -122,11 +122,6 @@ const AccountPage = () => {
           </div>
 
           <div>
-            <Label>Profession</Label>
-            <Input className="mt-1.5" placeholder="Enter your profession" />
-          </div>
-
-          <div>
             <Label>About</Label>
             <textarea 
               className="mt-1.5 block w-full rounded-2xl border-2 border-neutral-100 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 h-32 resize-none"
@@ -233,17 +228,22 @@ const AccountPage = () => {
                     {address.address}
                   </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-3 items-center">
                   {!address.isDefault && (
                     <button
                       onClick={() => handleSetDefaultAddress(address.id)}
-                      className="text-sm text-primary-600 hover:text-primary-500">
-                      Set as Default
+                      className="px-3 py-1 text-sm bg-green-50 text-green-600 rounded-full hover:bg-green-100">
+                      Set Default
                     </button>
                   )}
                   <button
+                    onClick={() => handleEditAddress(address.id)}
+                    className="px-3 py-1 text-sm bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100">
+                    Edit
+                  </button>
+                  <button
                     onClick={() => handleDeleteAddress(address.id)}
-                    className="text-sm text-red-600 hover:text-red-500">
+                    className="px-3 py-1 text-sm bg-red-50 text-red-600 rounded-full hover:bg-red-100">
                     Delete
                   </button>
                 </div>
