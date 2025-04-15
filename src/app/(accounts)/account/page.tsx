@@ -4,6 +4,7 @@
 import Label from "@/components/Label/Label";
 import React, { useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import { avatarImgs } from "@/contains/fakeData";
 import Image from "next/image";
@@ -103,6 +104,34 @@ const AccountPage = () => {
           <div>
             <Label>Full name</Label>
             <Input className="mt-1.5" defaultValue="John Doe" />
+          </div>
+
+          <div>
+            <Label>Date of Birth</Label>
+            <Input className="mt-1.5" type="date" />
+          </div>
+
+          <div>
+            <Label>Gender</Label>
+            <Select className="mt-1.5">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </Select>
+          </div>
+
+          <div>
+            <Label>Profession</Label>
+            <Input className="mt-1.5" placeholder="Enter your profession" />
+          </div>
+
+          <div>
+            <Label>About</Label>
+            <textarea 
+              className="mt-1.5 block w-full rounded-2xl border-2 border-neutral-100 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 h-32 resize-none"
+              placeholder="Tell us about yourself"
+            />
           </div>
 
           <div>
