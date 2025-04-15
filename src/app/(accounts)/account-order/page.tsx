@@ -6,11 +6,26 @@ import { PRODUCTS } from "@/data/data";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Image from "next/image";
 import { useState } from "react";
-import Select from "@/shared/Select/Select";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Listbox } from "@headlessui/react";
 
 const AccountOrder = () => {
-  const [sortBy, setSortBy] = useState("newest");
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [sortBy, setSortBy] = useState({ name: "Newest First", value: "newest" });
+  const [filterStatus, setFilterStatus] = useState({ name: "All Status", value: "all" });
+
+  const sortOptions = [
+    { name: "Newest First", value: "newest" },
+    { name: "Oldest First", value: "oldest" },
+    { name: "Price: High to Low", value: "priceDesc" },
+    { name: "Price: Low to High", value: "priceAsc" }
+  ];
+
+  const statusOptions = [
+    { name: "All Status", value: "all" },
+    { name: "Delivered", value: "delivered" },
+    { name: "Processing", value: "processing" },
+    { name: "Cancelled", value: "cancelled" }
+  ];
 
   const orders = [
     {
@@ -28,11 +43,38 @@ const AccountOrder = () => {
   ];
 
   const filteredOrders = orders.filter(order => 
-    filterStatus === "all" || order.status.toLowerCase() === filterStatus.toLowerCase()
+    filterStatus.value === "all" || order.status.toLowerCase() === filterStatus.value
   ).sort((a, b) => {
-    if (sortBy === "newest") return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (sortBy.value === "newest") return new Date(b.date).getTime() - new Date(a.date).getTime();
     return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
+
+  const renderDropdown = (options: any[], value: any, onChange: (value: any) => void) => (
+    <Listbox value={value} onChange={onChange}>
+      <div className="relative">
+        <Listbox.Button className="relative w-full py-2.5 px-4 text-left bg-white dark:bg-neutral-800 rounded-lg shadow-sm cursor-pointer border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <span className="block truncate">{value.name}</span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <ChevronDownIcon className="w-5 h-5 text-neutral-400" aria-hidden="true" />
+          </span>
+        </Listbox.Button>
+        <Listbox.Options className="absolute z-10 w-full mt-1 bg-white dark:bg-neutral-800 rounded-lg shadow-lg max-h-60 overflow-auto focus:outline-none">
+          {options.map((option) => (
+            <Listbox.Option
+              key={option.value}
+              value={option}
+              className={({ active }) =>
+                `${active ? 'bg-primary-100 dark:bg-primary-700 text-primary-900 dark:text-white' : 'text-neutral-900 dark:text-neutral-100'}
+                cursor-pointer select-none relative py-2.5 px-4`
+              }
+            >
+              {option.name}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </div>
+    </Listbox>
+  );
 
   const renderProductItem = (product: any, index: number) => {
     const { image, name } = product;
@@ -69,7 +111,7 @@ const AccountOrder = () => {
               <span className="ml-2">1</span>
             </p>
             <div className="flex">
-              <button type="button" className="font-medium text-indigo-600 dark:text-primary-500">
+              <button type="button" className="font-medium text-primary-600 dark:text-primary-500 hover:text-primary-500">
                 Leave review
               </button>
             </div>
@@ -80,15 +122,21 @@ const AccountOrder = () => {
   };
 
   const renderOrder = (order: any) => {
+    const statusColor = {
+      'Delivered': 'text-green-600',
+      'Processing': 'text-blue-600',
+      'Cancelled': 'text-red-600'
+    }[order.status] || 'text-primary-600';
+
     return (
-      <div key={order.id} className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden z-0 mb-4">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
+      <div key={order.id} className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden z-0 mb-4 transition-shadow hover:shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-800/50">
           <div>
-            <p className="text-lg font-semibold">#{order.id}</p>
+            <p className="text-lg font-semibold">Order #{order.id}</p>
             <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5 sm:mt-2">
               <span>{order.date}</span>
               <span className="mx-2">·</span>
-              <span className="text-primary-500">{order.status}</span>
+              <span className={`${statusColor} font-medium`}>{order.status}</span>
             </p>
           </div>
           <div className="mt-3 sm:mt-0">
@@ -97,7 +145,7 @@ const AccountOrder = () => {
             </ButtonSecondary>
           </div>
         </div>
-        <div className="border-t border-slate-200 dark:border-slate-700 p-2 sm:p-8 divide-y divide-y-slate-200 dark:divide-slate-700">
+        <div className="border-t border-slate-200 dark:border-slate-700 p-2 sm:p-8 divide-y divide-slate-200 dark:divide-slate-700">
           {order.products.map(renderProductItem)}
         </div>
       </div>
@@ -106,25 +154,15 @@ const AccountOrder = () => {
 
   return (
     <div className="space-y-10 sm:space-y-12">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl sm:text-3xl font-semibold">Order History</h2>
-        <div className="flex gap-4">
-          <Select 
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-40">
-            <option value="all">All Status</option>
-            <option value="delivered">Delivered</option>
-            <option value="processing">Processing</option>
-            <option value="cancelled">Cancelled</option>
-          </Select>
-          <Select 
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-40">
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-          </Select>
+      <div>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-6">Order History</h2>
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="w-full sm:w-48">
+            {renderDropdown(statusOptions, filterStatus, setFilterStatus)}
+          </div>
+          <div className="w-full sm:w-48">
+            {renderDropdown(sortOptions, sortBy, setSortBy)}
+          </div>
         </div>
       </div>
       {filteredOrders.map(renderOrder)}
