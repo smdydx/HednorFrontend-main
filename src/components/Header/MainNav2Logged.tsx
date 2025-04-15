@@ -95,7 +95,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             <h1 className="font-semibold">Refer</h1>
           </div>
         </div>
-        <div className="flex-1 flex gap-x-1 items-baseline  justify-end text-slate-700 dark:text-slate-100">
+        <div className="flex-1 flex items-center justify-end space-x-1 sm:space-x-3 text-slate-700 dark:text-slate-100">
           <AvatarDropdown />
           <CartDropdown />
         </div>

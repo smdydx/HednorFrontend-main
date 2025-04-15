@@ -69,7 +69,7 @@ export default function CartDropdown() {
           <Popover.Button
             className={`
                 ${open ? "" : "text-opacity-90"}
-                 group flex-col w-10 h-10 sm:w-16 sm:h-16 rounded-full inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 relative`}>
+                 group w-10 h-10 sm:w-12 sm:h-12 rounded-full inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 relative`}>
             <div>
               <div className="w-3.5 h-3.5 flex items-center justify-center bg-primary-500 absolute sm:top-1.5 right-1 sm:right-3 rounded-full text-[10px] leading-none text-white font-medium">
                 <span className="mt-[1px]">3</span>

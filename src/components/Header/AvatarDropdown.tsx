@@ -18,7 +18,7 @@ export default function AvatarDropdown() {
               onClick={() => setIsOpen(!open)}
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
-              className={`rounded-full flex-col text-slate-700 dark:text-slate-300 w-10 h-10 sm:w-16 sm:h-16 focus:outline-none flex items-center justify-center ${
+              className={`rounded-full text-slate-700 dark:text-slate-300 w-10 h-10 sm:w-12 sm:h-12 focus:outline-none flex items-center justify-center ${
                 isOpen && "text-blue-500"
               }`}>
               <div className="flex flex-col items-center">
